@@ -1,0 +1,17 @@
+{
+  "name": "dev.mintylabs.sceneviewstatisticdisplay",
+  "displayName": "Mesh Stats",
+  "version": "1.0.0",
+  "description": "Gives you various mesh information displayed in your scene window",
+  "gitDependencies": {},
+  "vpmDependencies": {},
+  "author": {
+    "name": "MintLily",
+    "url": "https://github.com/MintLily"
+  },
+  "legacyPackages": [],
+  "legacyFolders": {},
+  "legacyFiles": {},
+  "type": "tool",
+  "unity": "2022.3"
+}
