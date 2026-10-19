@@ -126,7 +126,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
 
         foreach (var obj in Selection.gameObjects) {
             // 1. Process Basic Meshes (MeshFilter + MeshRenderer)
-            var meshFilters = obj.GetComponentsInChildren<MeshFilter>();
+            var meshFilters = obj.GetComponentsInChildren<MeshFilter>(true);
             foreach (var mf in meshFilters) {
                 var mr = mf.GetComponent<MeshRenderer>();
                 if (mf.sharedMesh == null || mr == null || processedBasicRenderers.Contains(mr)) continue;
@@ -138,7 +138,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
             }
 
             // 2. Process Skinned Meshes
-            var skinnedMeshes = obj.GetComponentsInChildren<SkinnedMeshRenderer>();
+            var skinnedMeshes = obj.GetComponentsInChildren<SkinnedMeshRenderer>(true);
             foreach (var smr in skinnedMeshes) {
                 if (smr.sharedMesh == null || processedSkinnedRenderers.Contains(smr)) continue;
                 vertexCount += smr.sharedMesh.vertexCount;
