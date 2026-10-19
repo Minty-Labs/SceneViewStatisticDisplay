@@ -85,7 +85,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
         _showSkinnedMeshes = EditorGUILayout.ToggleLeft("Skinned Meshes", _showSkinnedMeshes);
         _showVertices = EditorGUILayout.ToggleLeft("Vertex Count", _showVertices);
         _showTriangles = EditorGUILayout.ToggleLeft("Triangle Count", _showTriangles);
-        _showSubMeshes = EditorGUILayout.ToggleLeft("Sub-Mesh Count", _showSubMeshes);
+        _showSubMeshes = EditorGUILayout.ToggleLeft("Material Count", _showSubMeshes);
 
         if (EditorGUI.EndChangeCheck()) {
             EditorPrefs.SetBool(MintyLabs_SceneMeshStats_IsVisible, _isVisible);
@@ -119,7 +119,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
         if (!_isVisible || Selection.activeGameObject == null)
             return;
 
-        int vertexCount = 0, triangleCount = 0, basicMeshCount = 0, skinnedMeshCount = 0, subMeshCount = 0;
+        int vertexCount = 0, triangleCount = 0, basicMeshCount = 0, skinnedMeshCount = 0, materialCount = 0;
 
         var processedBasicRenderers = new HashSet<MeshRenderer>();
         var processedSkinnedRenderers = new HashSet<SkinnedMeshRenderer>();
@@ -132,7 +132,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
                 if (mf.sharedMesh == null || mr == null || processedBasicRenderers.Contains(mr)) continue;
                 vertexCount += mf.sharedMesh.vertexCount;
                 triangleCount += mf.sharedMesh.triangles.Length / 3;
-                subMeshCount += mf.sharedMesh.subMeshCount;
+                materialCount += mf.sharedMesh.subMeshCount;
                 basicMeshCount++;
                 processedBasicRenderers.Add(mr);
             }
@@ -143,7 +143,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
                 if (smr.sharedMesh == null || processedSkinnedRenderers.Contains(smr)) continue;
                 vertexCount += smr.sharedMesh.vertexCount;
                 triangleCount += smr.sharedMesh.triangles.Length / 3;
-                subMeshCount += smr.sharedMesh.subMeshCount;
+                materialCount += smr.sharedMesh.subMeshCount;
                 skinnedMeshCount++;
                 processedSkinnedRenderers.Add(smr);
             }
@@ -232,7 +232,10 @@ public class SelectionMeshStatsWindow : EditorWindow {
         }
 
         if (_showSubMeshes) {
-            GUILayout.Label($"Sub-Meshes (Draws): {subMeshCount}", labelStyle);
+            var valStr = $"{materialCount:N0}";
+            if (_useColourCoding)
+                valStr = $"<color={GetMaterialColour(materialCount)}>{valStr}</color>";
+            GUILayout.Label($"Materials: {valStr}", labelStyle);
         }
 
         GUILayout.EndArea();
@@ -259,6 +262,16 @@ public class SelectionMeshStatsWindow : EditorWindow {
     }
 
     private static string GetBasicMeshColour(int count) {
+        return count switch {
+            <= 4 => "#46a137",
+            <= 8 => "#6ae854",
+            <= 16 => "#EAAA09",
+            <= 32 => "#E55A42",
+            _ => "#d13d3d"
+        };
+    }
+    
+    private static string GetMaterialColour(int count) {
         return count switch {
             <= 4 => "#46a137",
             <= 8 => "#6ae854",
