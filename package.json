@@ -1,7 +1,7 @@
 {
   "name": "dev.mintylabs.sceneviewstatisticdisplay",
   "displayName": "Mesh Stats",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Gives you various mesh information displayed in your scene window",
   "gitDependencies": {},
   "vpmDependencies": {},

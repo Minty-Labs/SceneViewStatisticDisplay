@@ -54,7 +54,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
     }
 
     [MenuItem("Tools/Minty Labs/Mesh Stats Settings")]
-    public static void ShowWindow() => GetWindow<SelectionMeshStatsWindow>("Mesh Stats Settings");
+    public static void ShowWindow() => GetWindow<SelectionMeshStatsWindow>("Mesh Stats Settings").titleContent.image = EditorGUIUtility.IconContent("TilemapRenderer Icon").image;
 
     [Shortcut("Scene View/Toggle Mesh Stats", KeyCode.F3)]
     public static void ToggleStatsVisibility() {
@@ -107,7 +107,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
         GUILayout.FlexibleSpace();
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        GUILayout.Label("Mesh Stats • Minty Labs • v1.0.0", EditorStyles.centeredGreyMiniLabel);
+        GUILayout.Label("Mesh Stats • Minty Labs • v1.1.0", EditorStyles.centeredGreyMiniLabel);
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
     }
@@ -150,7 +150,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
         }
 
         // Calculate dynamic height based on toggled stats
-        var boxWidth = 230f;
+        const float boxWidth = 230f;
         var boxHeight = 25f;
         if (_showName) boxHeight += 20f;
         if (_showBasicMeshes) boxHeight += 20f;
@@ -159,7 +159,7 @@ public class SelectionMeshStatsWindow : EditorWindow {
         if (_showTriangles) boxHeight += 20f;
         if (_showSubMeshes) boxHeight += 20f;
 
-        var padding = 10f;
+        const float padding = 10f;
         var xPos = padding;
         var yPos = padding;
 
